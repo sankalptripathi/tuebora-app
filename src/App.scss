@@ -1,0 +1,220 @@
+@import './constants.scss';
+
+body,
+span,
+div,
+a {
+  font-size: 13px;
+}
+
+.ht-35 {
+  height: 35px;
+}
+
+.ht-500 {
+  height: 500px;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
+.align-right {
+  text-align: right !important;
+}
+
+.align-center {
+  text-align: center !important;
+}
+
+.TubeoraApp {
+  width: $appWidth;
+  position: relative;
+  transform: translate(-50%);
+  left: 50%;
+  margin-top: 15px;
+
+  a {
+    color: $anchorLink;
+  }
+
+  a:active {
+    color: #fff;
+  }
+
+  .component {
+    margin-bottom: 24px;
+  }
+
+  .main-nav {
+    .navigation {
+      list-style-type: none;
+      display: block;
+      border: 1px solid $borderColor;
+      padding: 7px 0;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+
+      li {
+        display: inline-block;
+        padding-right: 8px;
+
+        .active button {
+          font-weight: 600;
+          color: #000;
+          background-color: $activeLink;
+          border-color: $activeLink;
+        }
+      }
+    }
+  }
+
+  .hoc-wrapper {
+    .search-comp {
+      .searchboxWrapper, .filterDropdownWrapper {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      .searchboxWrapper {
+        width: 500px;
+        
+        input[name=searchbox] {
+          width: 100%;
+          height: 100%;
+          border: 1px solid $borderColor;
+          padding: 2px 7px;
+        }
+      }
+
+      .filterDropdownWrapper {
+        .dropdown {
+          height: 100%;
+        }
+        #filterDropdown {
+          width: 115px;
+          height: 100%;
+          text-align: left;
+          background-color: #2e2e74;
+          color: #fff;
+        }
+        .dropdown-toggle::after{
+          position: absolute;
+          right: 8px;
+          top: 44%;
+        }
+      }
+    }
+
+    .tabs-comp {
+      .nav-tabs {
+        border-bottom-color: $borderColor;
+        .nav-link {
+          background-color: #f5f7f7;
+          font-weight: 500;
+          border: 1px solid $borderColor;
+          margin-right: 5px;
+          color: #888;
+
+          &:hover {
+            color: #000;
+          }
+        }
+
+        .nav-link.active {
+          background-color: $activeLink;
+          font-weight: 700;
+          border: 1px solid $borderColor;
+          border-bottom-color: transparent;
+          color: #333;
+        }
+      }
+      
+      .layoutTogglerWrapper {
+        position: relative;
+
+        .layout-toggler {
+          position: absolute;
+          right: 0;
+          top: 0;
+
+          a.toggler-link {
+            text-decoration: none;
+            color: #888;
+          }
+        }
+      }
+    }
+
+    .tab-content {
+      .card {
+        margin: 20px 20px 0 0;
+        border-radius: 0;
+        border: 1px solid $borderColor;
+        height: 170px;
+
+        .card-body {
+          padding: 10px 0 0 10px;
+          
+          .card-title{
+            color: $titleColor;
+          }
+          .card-text {
+            margin-bottom: 0.2rem;
+            max-height: 200px;
+            width: 200px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 20px;
+          }
+          &.accounts {
+           .card-text {
+              &:nth-of-type(1) {
+                width: 550px;
+                display: inline-block;
+              }
+            } 
+          }
+        }
+      }
+
+      .grid-view {
+        width: $appWidth/2;
+        display: inline-block;
+        height: 200px;
+      
+        .card-body {
+          padding: 10px 0 0 10px;
+
+          .card-title{
+            color: $titleColor;
+          }
+          .card-text {
+            margin-bottom: 0.2rem;
+            max-height: 100px;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            margin-right: 8px;
+          }
+          &.accounts {
+            .card-title {
+              height: 50px;
+              overflow: hidden;
+            }
+            .card-text {
+               &:nth-of-type(1) {
+                 width: 185px;
+                 height: 60px;
+                 overflow: hidden;
+                 display: inline-block;
+               }
+             } 
+           }
+         }
+      }
+    }
+  }
+}

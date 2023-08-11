@@ -1,0 +1,36 @@
+{
+	"heading": "Account Management",
+	"configs": {
+		"tabs": [
+			{
+				"name": "All Accounts",
+				"id": "all_accounts"
+			},
+			{
+				"id": "orphaned_accounts",
+				"name": "Orphaned Accounts"
+			}
+		],
+		"search": {
+			"layout": 8,
+			"placeholder": "Search Accounts",
+			"allowedFields": [
+				"account.name",
+				"account.description",
+				"account.createdBy"
+			],
+			"allowedFilters": [
+				{
+					"name": "account.createdOn",
+					"type": "date"
+					 
+				},
+				{
+					"name": "account.id",
+					"type": "text",
+					"operator": "eq"
+				}
+			]
+		}
+	}
+}
