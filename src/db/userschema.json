@@ -1,35 +1,37 @@
 {
-	"heading": "User Management",
-	"configs": {
-		"search": {
-			"layout": 8,
-			"placeholder": "Search Users",
-			"allowedFields": [
-				"firstName",
-				"lastName",
-				"manager.name",
-				"employeeId",
-				"permissions"
-			],
-			"allowedFilters": [
-				{
-					"name": "location",
-					"type": "dropdown",
-					"values": [
-						"Bangalore",
-						"Delhi",
-						"Mumbai",
-						"Chennai",
-						"Coimbatore",
-						"Austin",
-						"Boston"
-					]
-				},
-				{
-					"name": "manager",
-					"type": "text"
-				}
-			]
+	"userSchema": {
+		"heading": "User Management",
+		"configs": {
+			"search": {
+				"layout": 8,
+				"placeholder": "Search Users",
+				"allowedFields": [
+					"firstName",
+					"lastName",
+					"manager.name",
+					"employeeId",
+					"permissions"
+				],
+				"allowedFilters": [
+					{
+						"name": "location",
+						"type": "dropdown",
+						"values": [
+							"Bangalore",
+							"Delhi",
+							"Mumbai",
+							"Chennai",
+							"Coimbatore",
+							"Austin",
+							"Boston"
+						]
+					},
+					{
+						"name": "manager",
+						"type": "text"
+					}
+				]
+			}
 		}
 	}
 }

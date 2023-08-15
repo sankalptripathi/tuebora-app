@@ -1,7 +1,6 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import React from "react";
-import { getUsers } from "../../api/services";
 
 export default class FilterDropdown extends React.Component {
     constructor(props) {
@@ -10,7 +9,6 @@ export default class FilterDropdown extends React.Component {
             managerName: '',
             usersList: [],
             cities: [],
-            selectedCity: ''
         }
     }
 
@@ -19,58 +17,55 @@ export default class FilterDropdown extends React.Component {
         this.setState({
             usersList: this.props.data.usersData
         });
-        this.getCitiesOfUsers(this.props.data.usersData);
-    }
-
-    getCitiesOfUsers = (users) => {
-        const citiesArr = users.map(u => u.address.city);
-        this.setState({
-            cities: citiesArr,
-            selectedCity: citiesArr[0]
-        });
-    }
-
-    handleManagerName = (e) => {
-        this.setState({
-            managerName: e.target.value
-        });
-    }
-
-    changeValue = (city) => {
-        // debugger;
-        const cityFormat = city.split("/")[1];
-        this.setState({
-            selectedCity: cityFormat
-        }, () => {
-            const filteredUsersFromCity = this.props.data.usersData.filter(user => {
-                return (user.address.city === this.state.selectedCity)
-            });
-            console.log(filteredUsersFromCity);     // giving filtered users on selecting city
-            this.props.data.getUsersFromDb();
-        });
+        this.props.data.getCitiesOfUsers(this.props.data.usersData);
     }
 
     render() {
+    const selectedCityHash = document.location.href.indexOf('#') > -1 ? document.location.href.split('#')[1].substring(1) : '';
+    // this.props.data.selectCity(selectedCityHash);
     return(
             <div className="filterDropdownWrapper ht-35">
                 <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
-                    <Dropdown.ItemText style={{fontSize: '12px'}}>Location</Dropdown.ItemText>
+                        <Dropdown.ItemText style={{fontSize: '12px'}}>
+                            {this.props.data.data.configs.search && 
+                            this.props.data.data.configs.search.allowedFilters[0].name}
+                        </Dropdown.ItemText>
                         <DropdownButton variant="default" 
                         id="filterDropdownLocation" 
-                        title={this.state.selectedCity} 
-                        onSelect={this.changeValue} 
-                        size="sm">
+                        title={selectedCityHash ? this.props.data.selectedCity : "Select City"} 
+                        onSelect={
+                            this.props.data.selectCity
+                        }
+                        size="sm"
+                        ref={this.props.data.selectCityRef}
+                        >
                             {
-                                this.state.cities.map(city => {
-                                    return (<Dropdown.Item href={`#/${city}`}>
-                                                {city}
-                                            </Dropdown.Item>)
+                                selectedCityHash !== '' &&
+                                <Dropdown.Item eventKey={"Select City"} href="#/" key={0}>Select City</Dropdown.Item>
+                            }
+                            {
+                                this.props.data.citiesList.map((city, i) => {
+                                return (<Dropdown.Item eventKey={city} href={`#/${city}`} key={i}>
+                                        {city}
+                                    </Dropdown.Item>)
                                 })
                             }
                         </DropdownButton>
-                    <Dropdown.ItemText style={{fontSize: '12px'}}>Manager</Dropdown.ItemText>
+                    <Dropdown.ItemText style={{fontSize: '12px'}}>
+                        {
+                            this.props.data.data.configs.search && 
+                            this.props.data.data.configs.search.allowedFilters[1].name
+                        }
+                    </Dropdown.ItemText>
                     <Dropdown.Item>
-                        <input type="text" name="managerName" onChange={this.handleManagerName} value={this.state.managerName} />
+                        <input 
+                            ref={this.props.data.inputManagerRef}
+                            type="text"
+                            name="managerName"
+                            value={this.props.data.managersData} 
+                            onChange={(e) => this.props.data.inputManagerName(e)} 
+                            // onKeyDown={this.props.data.detectKeyDown} 
+                        />
                     </Dropdown.Item>
                 </DropdownButton>
             </div>

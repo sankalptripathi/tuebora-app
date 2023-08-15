@@ -104,6 +104,28 @@ a {
           right: 8px;
           top: 44%;
         }
+        .dropdown-menu {
+          .dropdown-toggle {
+            width: 185px;
+            margin-left: 3px;
+            text-align: left;
+            font-size: 12px;
+            padding-left: 12px;
+            border: 0;
+
+            &:hover, &:focus {
+              background-color: #f5f7f7;
+            }
+          }
+          .dropdown-menu {
+            width: 200px;
+            left: 3px;
+
+            a {
+              font-size: 12px;
+            }
+          }
+        }
       }
     }
 
@@ -215,6 +237,15 @@ a {
            }
          }
       }
+      .no-records-card {
+        text-align: center;
+        margin-top: 10px;
+        padding: 15px;
+      }
+    }
+    
+    .pagination {
+      padding: 20px 0;
     }
   }
 }

@@ -7,52 +7,59 @@ import Account from './components/account';
 import LayoutHoc from './components/hoc';
 import 'bootstrap/dist/css/bootstrap.css';
 import ErrorPage from './components/errorpage';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { MainContext } from './context';
+import { getAccountsSchema, getUserSchema } from './api/services';
+import _ from 'lodash';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.userData = {
-      classList: {
-        mainWrapper: 'tabs-display users-display',
-        searchWrapper: 'searchbox',
-        tabsWrapper: 'tabs-ui'
-      },
-      compHeading: "Users Management",
-      tabsConfig: [
-        {
-          "name": "All Users",
-          "id": "all_users"
+        classList: {
+          mainWrapper: 'tabs-display users-display',
+          searchWrapper: 'searchbox',
+          tabsWrapper: 'tabs-ui'
         },
-        {
-          "name": "My Team Users",
-          "id": "Sankalp"
+        configs: {
+          tabs: [
+            {
+              "name": "All Users",
+              "id": "all_users"
+            },
+            {
+              "name": "My Team Users",
+              "id": "Sankalp"
+            }
+          ]
         }
-      ]
-  };
+    };
     this.accountData = {
       classList: {
         mainWrapper: 'tabs-display account-display',
         searchWrapper: 'searchbox',
         tabsWrapper: 'tabs-ui'
-      },
-      compHeading: "Accounts Management",
-      tabsConfig: [
-        {
-          "name": "All Accounts",
-          "id": "all_accounts"
-        },
-        {
-          "name": "Orphaned Accounts",
-          "id": "orphaned_accounts"
-        }
-      ]
+      }
     };
 
     this.state = {
-      designType: 'grid-view'
+      designType: 'grid-view',
+      usersPageSchema: this.userData,
+      accountsPageSchema: this.accountData
     }
+  }
+
+  componentDidMount = async () => {
+    let usersSchema = await getUserSchema();
+    let accountsSchema = await getAccountsSchema();
+
+    const usersUpdatedSchema = _.merge(usersSchema, this.state.usersPageSchema);
+    const accountsUpdatedSchema = _.merge(accountsSchema, this.state.accountsPageSchema);
+
+    this.setState({
+      usersPageSchema: usersUpdatedSchema,
+      accountsPageSchema: accountsUpdatedSchema
+    });
   }
 
   toggleDesignType = (e) => {
@@ -63,24 +70,33 @@ class App extends React.Component {
   }
 
   render() {
-    const UserComponent = LayoutHoc(User, this.userData);
-    const AccountComponent = LayoutHoc(Account, this.accountData);
+    if(this.state.usersPageSchema.configs.search && this.state.accountsPageSchema.heading) {
+      const UserComponent = LayoutHoc(User, this.state.usersPageSchema);
+      const AccountComponent = LayoutHoc(Account, this.state.accountsPageSchema);
 
-    return (
+      return (
+          <div className="TubeoraApp align-left">
+            <MainContext.Provider value={{designType: this.state.designType, setDesignType: this.toggleDesignType}}>
+            <BrowserRouter>
+              <Header/>
+                <Routes>
+                    <Route path="/" exact element={<Main/>} />
+                    <Route path="/users" exact element={<UserComponent/>} />
+                    <Route path="/accounts" exact element={<AccountComponent/>} />
+                    <Route path="*" element={<ErrorPage error={'Page not found'}/>} />
+                </Routes>
+            </BrowserRouter>
+            </MainContext.Provider>
+        </div>
+      );
+    }
+    else {
+      return (
         <div className="TubeoraApp align-left">
-          <MainContext.Provider value={{designType: this.state.designType, setDesignType: this.toggleDesignType}}>
-          <BrowserRouter>
-            <Header/>
-              <Routes>
-                  <Route path="/" exact element={<Main/>} />
-                  <Route path="/users" exact element={<UserComponent/>} />
-                  <Route path="/accounts" exact element={<AccountComponent/>} />
-                  <Route path="*" element={<ErrorPage error={'Page not found'}/>} />
-              </Routes>
-          </BrowserRouter>
-          </MainContext.Provider>
-      </div>
+          <span>Loading...</span>
+        </div>
     );
+    }
   }
 }
 

@@ -1,12 +1,86 @@
 {
+    "usersSchema": {
+		"heading": "User Management",
+		"configs": {
+			"search": {
+				"layout": 8,
+				"placeholder": "Search Users",
+				"allowedFields": [
+					"firstName",
+					"lastName",
+					"manager.name",
+					"employeeId",
+					"permissions"
+				],
+				"allowedFilters": [
+					{
+						"name": "location",
+						"type": "dropdown",
+						"values": [
+							"Bangalore",
+							"Delhi",
+							"Mumbai",
+							"Chennai",
+							"Coimbatore",
+							"Austin",
+							"Boston"
+						]
+					},
+					{
+						"name": "manager",
+						"type": "text"
+					}
+				]
+			}
+		}
+	},
+    "accountsSchema": {
+		"heading": "Account Management",
+		"configs": {
+			"tabs": [
+				{
+					"name": "All Accounts",
+					"id": "all_accounts"
+				},
+				{
+					"id": "orphaned_accounts",
+					"name": "Orphaned Accounts"
+				}
+			],
+			"search": {
+				"layout": 8,
+				"placeholder": "Search Accounts",
+				"allowedFields": [
+					"account.name",
+					"account.description",
+					"account.createdBy"
+				],
+				"allowedFilters": [
+					{
+						"name": "account.createdOn",
+						"type": "date"
+						
+					},
+					{
+						"name": "account.id",
+						"type": "text",
+						"operator": "eq"
+					}
+				]
+			}
+		}
+	},
     "users": [{
-        "id": 1,
+        "employeeId": 1,
         "firstName": "Terry",
         "lastName": "Medhurst",
         "maidenName": "Smitham",
         "age": 50,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "atuny0@sohu.com",
         "phone": "+63 791 675 8914",
         "username": "atuny0",
@@ -61,13 +135,16 @@
         "ssn": "661-64-2976",
         "userAgent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/12.0.702.0 Safari/534.24"
     }, {
-        "id": 2,
+        "employeeId": 2,
         "firstName": "Sheldon",
         "lastName": "Quigley",
         "maidenName": "Cole",
         "age": 28,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "hbingley1@plala.or.jp",
         "phone": "+7 813 117 7139",
         "username": "hbingley1",
@@ -122,13 +199,16 @@
         "ssn": "447-08-9217",
         "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"
     }, {
-        "id": 3,
+        "employeeId": 3,
         "firstName": "Terrill",
         "lastName": "Hills",
         "maidenName": "Hoeger",
         "age": 38,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "rshawe2@51.la",
         "phone": "+63 739 292 7942",
         "username": "rshawe2",
@@ -183,13 +263,16 @@
         "ssn": "633-89-1926",
         "userAgent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:21.0.0) Gecko/20121011 Firefox/21.0.0"
     }, {
-        "id": 4,
+        "employeeId": 4,
         "firstName": "Miles",
         "lastName": "Cummerata",
         "maidenName": "Maggio",
         "age": 49,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "yraigatt3@nature.com",
         "phone": "+86 461 145 4186",
         "username": "yraigatt3",
@@ -244,13 +327,16 @@
         "ssn": "487-28-6642",
         "userAgent": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.17 Safari/537.11"
     }, {
-        "id": 5,
+        "employeeId": 5,
         "firstName": "Mavis",
         "lastName": "Schultz",
         "maidenName": "Yundt",
         "age": 38,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "kmeus4@upenn.edu",
         "phone": "+372 285 771 1911",
         "username": "kmeus4",
@@ -305,13 +391,16 @@
         "ssn": "667-98-5357",
         "userAgent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.1 Safari/535.1"
     }, {
-        "id": 6,
+        "employeeId": 6,
         "firstName": "Alison",
         "lastName": "Reichert",
         "maidenName": "Franecki",
         "age": 21,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "jtreleven5@nhs.uk",
         "phone": "+351 527 735 3642",
         "username": "jtreleven5",
@@ -366,13 +455,16 @@
         "ssn": "158-68-0184",
         "userAgent": "Mozilla/5.0 (Windows; U; Windows NT 6.0; nb-NO) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"
     }, {
-        "id": 7,
+        "employeeId": 7,
         "firstName": "Oleta",
         "lastName": "Abbott",
         "maidenName": "Wyman",
         "age": 31,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "dpettegre6@columbia.edu",
         "phone": "+62 640 802 7111",
         "username": "dpettegre6",
@@ -427,13 +519,16 @@
         "ssn": "478-11-2206",
         "userAgent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru-RU) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"
     }, {
-        "id": 8,
+        "employeeId": 8,
         "firstName": "Ewell",
         "lastName": "Mueller",
         "maidenName": "Durgan",
         "age": 29,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "ggude7@chron.com",
         "phone": "+86 946 297 2275",
         "username": "ggude7",
@@ -488,13 +583,16 @@
         "ssn": "238-41-5528",
         "userAgent": "Mozilla/5.0 (X11; Linux amd64) AppleWebKit/534.36 (KHTML, like Gecko) Chrome/13.0.766.0 Safari/534.36"
     }, {
-        "id": 9,
+        "employeeId": 9,
         "firstName": "Demetrius",
         "lastName": "Corkery",
         "maidenName": "Gleason",
         "age": 22,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "nloiterton8@aol.com",
         "phone": "+86 356 590 9727",
         "username": "nloiterton8",
@@ -549,13 +647,16 @@
         "ssn": "717-26-3759",
         "userAgent": "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; de) AppleWebKit/528.4+ (KHTML, like Gecko) Version/4.0dp1 Safari/526.11.2"
     }, {
-        "id": 10,
+        "employeeId": 10,
         "firstName": "Eleanora",
         "lastName": "Price",
         "maidenName": "Cummings",
         "age": 37,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "umcgourty9@jalbum.net",
         "phone": "+60 184 408 0824",
         "username": "umcgourty9",
@@ -610,13 +711,16 @@
         "ssn": "544-66-0745",
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.6 Safari/537.11"
     }, {
-        "id": 11,
+        "employeeId": 11,
         "firstName": "Marcel",
         "lastName": "Jones",
         "maidenName": "Smith",
         "age": 39,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "acharlota@liveinternet.ru",
         "phone": "+967 253 210 0344",
         "username": "acharlota",
@@ -671,13 +775,16 @@
         "ssn": "342-54-8422",
         "userAgent": "Mozilla/5.0 (Windows NT 5.2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.792.0 Safari/535.1"
     }, {
-        "id": 12,
+        "employeeId": 12,
         "firstName": "Assunta",
         "lastName": "Rath",
         "maidenName": "Heller",
         "age": 42,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "rhallawellb@dropbox.com",
         "phone": "+380 962 542 6549",
         "username": "rhallawellb",
@@ -731,13 +838,16 @@
         "ssn": "116-51-6131",
         "userAgent": "Mozilla/5.0 (X11; CrOS i686 4319.74.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36"
     }, {
-        "id": 13,
+        "employeeId": 13,
         "firstName": "Trace",
         "lastName": "Douglas",
         "maidenName": "Lemke",
         "age": 26,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "lgribbinc@posterous.com",
         "phone": "+1 609 937 3468",
         "username": "lgribbinc",
@@ -792,13 +902,16 @@
         "ssn": "217-05-3082",
         "userAgent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru-RU) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4"
     }, {
-        "id": 14,
+        "employeeId": 14,
         "firstName": "Enoch",
         "lastName": "Lynch",
         "maidenName": "Heidenreich",
         "age": 21,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "mturleyd@tumblr.com",
         "phone": "+94 912 100 5118",
         "username": "mturleyd",
@@ -853,13 +966,16 @@
         "ssn": "742-81-1714",
         "userAgent": "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-en) AppleWebKit/533.16 (KHTML, like Gecko) Version/4.1 Safari/533.16"
     }, {
-        "id": 15,
+        "employeeId": 15,
         "firstName": "Jeanne",
         "lastName": "Halvorson",
         "maidenName": "Cummerata",
         "age": 26,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "kminchelle@qq.com",
         "phone": "+86 581 108 7855",
         "username": "kminchelle",
@@ -914,13 +1030,16 @@
         "ssn": "855-43-8639",
         "userAgent": "Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.14 Safari/534.24"
     }, {
-        "id": 16,
+        "employeeId": 16,
         "firstName": "Trycia",
         "lastName": "Fadel",
         "maidenName": "Rosenbaum",
         "age": 41,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "dpierrof@vimeo.com",
         "phone": "+420 833 708 0340",
         "username": "dpierrof",
@@ -975,13 +1094,16 @@
         "ssn": "677-73-1525",
         "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.872.0 Safari/535.2"
     }, {
-        "id": 17,
+        "employeeId": 17,
         "firstName": "Bradford",
         "lastName": "Prohaska",
         "maidenName": "Bins",
         "age": 43,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "vcholdcroftg@ucoz.com",
         "phone": "+420 874 628 3710",
         "username": "vcholdcroftg",
@@ -1036,13 +1158,16 @@
         "ssn": "795-36-7752",
         "userAgent": "Mozilla/5.0 (Windows NT 5.2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.813.0 Safari/535.1"
     }, {
-        "id": 18,
+        "employeeId": 18,
         "firstName": "Arely",
         "lastName": "Skiles",
         "maidenName": "Monahan",
         "age": 42,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "sberminghamh@chron.com",
         "phone": "+55 886 766 8617",
         "username": "sberminghamh",
@@ -1097,13 +1222,16 @@
         "ssn": "551-74-1349",
         "userAgent": "Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0"
     }, {
-        "id": 19,
+        "employeeId": 19,
         "firstName": "Gust",
         "lastName": "Purdy",
         "maidenName": "Abshire",
         "age": 46,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "bleveragei@so-net.ne.jp",
         "phone": "+86 886 889 0258",
         "username": "bleveragei",
@@ -1158,13 +1286,16 @@
         "ssn": "809-93-2422",
         "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.3 Safari/534.24"
     }, {
-        "id": 20,
+        "employeeId": 20,
         "firstName": "Lenna",
         "lastName": "Renner",
         "maidenName": "Schumm",
         "age": 41,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "aeatockj@psu.edu",
         "phone": "+1 904 601 7177",
         "username": "aeatockj",
@@ -1219,13 +1350,16 @@
         "ssn": "389-03-0381",
         "userAgent": "Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.24 (KHTML, like Gecko) Ubuntu/10.10 Chromium/12.0.702.0 Chrome/12.0.702.0 Safari/534.24"
     }, {
-        "id": 21,
+        "employeeId": 21,
         "firstName": "Doyle",
         "lastName": "Ernser",
         "maidenName": "Feeney",
         "age": 23,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "ckensleyk@pen.io",
         "phone": "+86 634 419 6839",
         "username": "ckensleyk",
@@ -1280,13 +1414,16 @@
         "ssn": "562-46-9709",
         "userAgent": "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"
     }, {
-        "id": 22,
+        "employeeId": 22,
         "firstName": "Tressa",
         "lastName": "Weber",
         "maidenName": "Williamson",
         "age": 41,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "froachel@howstuffworks.com",
         "phone": "+34 517 104 6248",
         "username": "froachel",
@@ -1341,13 +1478,16 @@
         "ssn": "155-87-0243",
         "userAgent": "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; de-de) AppleWebKit/533.16 (KHTML, like Gecko) Version/4.1 Safari/533.16"
     }, {
-        "id": 23,
+        "employeeId": 23,
         "firstName": "Felicity",
         "lastName": "O'Reilly",
         "maidenName": "Rosenbaum",
         "age": 46,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "beykelhofm@wikispaces.com",
         "phone": "+63 919 564 1690",
         "username": "beykelhofm",
@@ -1402,13 +1542,16 @@
         "ssn": "441-72-1229",
         "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.872.0 Safari/535.2"
     }, {
-        "id": 24,
+        "employeeId": 24,
         "firstName": "Jocelyn",
         "lastName": "Schuster",
         "maidenName": "Dooley",
         "age": 19,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "brickeardn@fema.gov",
         "phone": "+7 968 462 1292",
         "username": "brickeardn",
@@ -1463,13 +1606,16 @@
         "ssn": "291-72-5526",
         "userAgent": "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; ja-jp) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27"
     }, {
-        "id": 25,
+        "employeeId": 25,
         "firstName": "Edwina",
         "lastName": "Ernser",
         "maidenName": "Kiehn",
         "age": 21,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "dfundello@amazon.co.jp",
         "phone": "+86 376 986 8945",
         "username": "dfundello",
@@ -1524,13 +1670,16 @@
         "ssn": "266-43-5297",
         "userAgent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"
     }, {
-        "id": 26,
+        "employeeId": 26,
         "firstName": "Griffin",
         "lastName": "Braun",
         "maidenName": "Deckow",
         "age": 35,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "lgronaverp@cornell.edu",
         "phone": "+62 511 790 0161",
         "username": "lgronaverp",
@@ -1585,13 +1734,16 @@
         "ssn": "407-02-8915",
         "userAgent": "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25"
     }, {
-        "id": 27,
+        "employeeId": 27,
         "firstName": "Piper",
         "lastName": "Schowalter",
         "maidenName": "Wuckert",
         "age": 47,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "fokillq@amazon.co.jp",
         "phone": "+60 785 960 7918",
         "username": "fokillq",
@@ -1646,13 +1798,16 @@
         "ssn": "408-90-5986",
         "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2224.3 Safari/537.36"
     }, {
-        "id": 28,
+        "employeeId": 28,
         "firstName": "Kody",
         "lastName": "Terry",
         "maidenName": "Larkin",
         "age": 28,
         "gender": "male",
-        "manager": "Sankalp",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Sankalp"
+        },
         "email": "xisherwoodr@ask.com",
         "phone": "+81 859 545 8951",
         "username": "xisherwoodr",
@@ -1707,13 +1862,16 @@
         "ssn": "389-74-9456",
         "userAgent": "Mozilla/6.0 (Macintosh; I; Intel Mac OS X 11_7_9; de-LI; rv:1.9b4) Gecko/2012010317 Firefox/10.0a4"
     }, {
-        "id": 29,
+        "employeeId": 29,
         "firstName": "Macy",
         "lastName": "Greenfelder",
         "maidenName": "Koepp",
         "age": 45,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "jissetts@hostgator.com",
         "phone": "+81 915 649 2384",
         "username": "jissetts",
@@ -1768,13 +1926,16 @@
         "ssn": "391-33-1550",
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.45 Safari/535.19"
     }, {
-        "id": 30,
+        "employeeId": 30,
         "firstName": "Maurine",
         "lastName": "Stracke",
         "maidenName": "Abshire",
         "age": 31,
         "gender": "female",
-        "manager": "Mohan",
+        "permissions": ["manager", "admin"],
+        "manager": {
+            "name": "Mohan"
+        },
         "email": "kdulyt@umich.edu",
         "phone": "+48 143 590 6847",
         "username": "kdulyt",

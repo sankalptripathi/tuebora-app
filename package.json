@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npm run json-server\"",
-    "json-server": "json-server --p 5000 --watch ./src/db/usersData.json",
+    "json-server": "json-server --p 5000 --watch ./src/db/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
