@@ -83,11 +83,11 @@ export default class FilterDropdown extends React.Component {
                         </Dropdown.ItemText>
                         <Dropdown.Item>
                             <input 
-                                ref={this.props.data.inputManagerRef}
+                                // ref={this.props.data.inputAccountCreatedDateRef}
                                 type="text"
-                                name="managerName"
-                                value={this.props.data.managersData} 
-                                onChange={(e) => this.props.data.inputManagerName(e)} 
+                                name="accCreationDate"
+                                // value={} 
+                                // onChange={(e) => this.props.data} 
                             />
                         </Dropdown.Item>
                         <Dropdown.ItemText style={{fontSize: '12px'}}>
@@ -98,11 +98,11 @@ export default class FilterDropdown extends React.Component {
                         </Dropdown.ItemText>
                         <Dropdown.Item>
                             <input 
-                                ref={this.props.data.inputManagerRef}
+                                ref={this.props.data.inputAccountIdRef}
                                 type="text"
-                                name="managerName"
-                                value={this.props.data.managersData} 
-                                onChange={(e) => this.props.data.inputManagerName(e)} 
+                                name="accountId"
+                                value={this.props.data.inputAccountId} 
+                                onChange={(e) => this.props.data.inputAccountIdHandler(e)} 
                             />
                         </Dropdown.Item>
                 </DropdownButton>

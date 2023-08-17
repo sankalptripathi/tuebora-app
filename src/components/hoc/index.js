@@ -12,17 +12,22 @@ export default function LayoutHoc(CompName, data) {
             this.searchFieldRef = React.createRef();
             this.selectCityRef = React.createRef();
             this.inputManagerRef = React.createRef();
+            this.inputAccountCreatedDateRef = React.createRef();
+            this.inputAccountIdRef = React.createRef();
             
             this.state = {
                 searchFieldRef: this.searchFieldRef,
                 selectCityRef: this.selectCityRef,
                 inputManagerRef: this.inputManagerRef,
+                inputAccountIdRef: this.inputAccountIdRef,
+                inputAccountCreatedDateRef: this.inputAccountCreatedDateRef,
                 data: data,
                 usersData: [],
                 accountsData: [],
                 selectedCity: '',
                 citiesList: [],
                 managersData: [],
+                inputAccountId: "",
                 currentTab: '',
                 limit: 30,
                 activePage: 1,
@@ -35,7 +40,9 @@ export default function LayoutHoc(CompName, data) {
                 getCreatedDatesOfAccounts: this.getCreatedDatesOfAccounts,
                 selectCity: this.selectCity,
                 inputManagerName: this.inputManagerName,
+                inputAccountIdHandler: this.inputAccountIdHandler,
                 searchTextHandler: this.searchTextHandler,
+                searchTextHandlerAccount: this.searchTextHandlerAccount,
                 getAccountsFromDb: this.getAccountsFromDb,
                 handlePageSwitch: this.handlePageSwitch
             }
@@ -158,10 +165,30 @@ export default function LayoutHoc(CompName, data) {
                 }
             });
         }
+        inputAccountIdHandler = (elem) => {
+            const accountId = elem.target ? elem.target.value : elem.value;
+            this.setState({
+                inputAccountId: accountId
+            }, () => {
+                if(accountId) {
+                    const accounts = this.state.accountsData.filter(u => {
+                        return (
+                            (accountId.toLowerCase() === u.id.toLowerCase())
+                        );
+                    });
+                    (accounts.length > 0) &&
+                    this.setState({
+                        accountsData: accounts
+                    });
+                }
+                else {
+                    this.filterTabHandlerAccounts(this.state.currentTab);
+                }
+            });
+        }
         searchTextHandler = (elem, allowed) => {
             if(allowed) {
                 let allowedFields = allowed;
-                const selectCity = this.selectCityRef && this.selectCityRef.current && this.selectCityRef.current.innerText;
 
                 const textQuery = elem.target ? elem.target.value : elem.value;
                 this.setState({
@@ -185,19 +212,48 @@ export default function LayoutHoc(CompName, data) {
                                     usersData: thisUserDetails
                                 });
                             }
-
-                            // return (
-                            //     (u.indexOf(textQuery.toLowerCase()) > -1) && 
-                            //     (selectCity === "Select City" ? true : selectCity === u.address.city)
-                            // );
                         });
-                        // (users.length > 0) &&
-                        // this.setState({
-                        //     usersData: users
-                        // });
                     }
                     else {
                         this.filterTabHandler(this.state.currentTab);
+                    }
+                });
+            }
+        }       
+        searchTextHandlerAccount = (elem, all) => {
+            if(all) {
+                const allowed = [];
+                for(let item of all) {
+                    allowed.push(item.split(".")[1]);
+                }
+                let allowedFields = allowed;
+
+                const textQuery = elem.target ? elem.target.value : elem.value;
+                this.setState({
+                    searchTextString: textQuery
+                }, () => {
+                    // console.log(managers);
+                    if(textQuery) {
+                        let thisAccountDetails = [];
+                        const users = this.state.accountsData && this.state.accountsData.filter(u => {
+                            const flatObj = flattenObject(u);
+                            for(let item in flatObj) {
+                                if(allowedFields.indexOf(item) > -1) {
+                                    if(String(u[item]).toLowerCase() === textQuery || String(flatObj[item]).toLowerCase() === textQuery) {
+                                        thisAccountDetails.push(u);
+                                    }
+                                }
+                            }
+
+                            if(thisAccountDetails.length) {
+                                this.setState({
+                                    accountsData: thisAccountDetails
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        this.filterTabHandlerAccounts(this.state.currentTab);
                     }
                 });
             }

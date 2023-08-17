@@ -44,7 +44,7 @@ export default class Account extends React.Component {
                                         (this.props.data.accountsData.map((account, c) => 
                                         <Card className={`${context.designType} ${this.state.activeCard === account.id ? 'active' : ''}`} key={c} onClick={() => this.addActiveClass(account.id)}>
                                             <Card.Body className="account-card-body">
-                                                <Card.Title className="card-title">{account.id}</Card.Title>
+                                                <Card.Title className="card-title">{account.name}</Card.Title>
                                                 <Card.Text>
                                                     <strong>Company : </strong>&nbsp;{account.company}
                                                 </Card.Text>
