@@ -3,21 +3,21 @@ import Card from "react-bootstrap/Card";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { MainContext } from "../../context";
-import Pagination from "react-bootstrap/Pagination";
+import PaginationUI from "../pagination";
 
 export default class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             usersData: [],
-        }
+            steps: 4,
+            activeCard: null
+        }    
     }
 
-    componentDidMount = () => {
-        const usersData = this.props.data.getUsersFromDb();
+    addActiveClass = (id) => {
         this.setState({
-            usersData: this.props.data.usersData,
-            accountsData: this.props.data.accountsData
+            activeCard: id
         });
     }
 
@@ -29,32 +29,48 @@ export default class User extends React.Component {
                 <Tabs defaultActiveKey="all_users" onSelect={this.props.data.filterTabHandler}>
                     {
                         this.props.data.data.configs.tabs.map((item, i) => {
+                            let usersDisplay = this.props.data.usersData.map((user, c) => {
+                                
+                                let list = [];
+                                for(let c=1; c <= this.state.steps; c++) {
+                                    list.push(<li className={(user.provisioning === c) ? 'active' : ''}></li>);
+                                }
+                                
+                                return (
+                                    <Card className={`${context.designType} ${this.state.activeCard === user.employeeId ? 'active' : ''}`} key={c} onClick={() => this.addActiveClass(user.employeeId)}>
+                                        <Card.Body>
+                                        <Card.Title className="card-title">{user.firstName}</Card.Title>
+                                        <Card.Text>
+                                            <strong>Manager : </strong>&nbsp;{user.manager && user.manager.name},&nbsp; 
+                                            <strong>Employee Id : </strong>&nbsp;{user.employeeId}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <strong>City : </strong>&nbsp;{user.address && user.address.city}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <strong>User Provisioning Status</strong><br/>
+                                            <ul className="progressbar">
+                                                {
+                                                    list
+                                                }
+                                            </ul>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <span style={{fontWeight: '1000px'}}>Permissions : </span>&nbsp;<br/>
+                                            <ul>
+                                                {user.permissions && user.permissions.map(p => <li>{p}</li>)}
+                                            </ul>
+                                        </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                )
+                            });
                             return (
                                 <Tab eventKey={item.id} title={item.name} key={i}>
                                     {
                                         (this.props.data.usersData.length > 0) 
                                         ?
-                                        (this.props.data.usersData.map((user, c) => 
-                                        <Card className={`${context.designType}`} key={c}>
-                                            <Card.Body>
-                                            <Card.Title className="card-title">{user.firstName}</Card.Title>
-                                            <Card.Text>
-                                                <strong>Manager: </strong>{user.manager.name},&nbsp; 
-                                                <strong>Employee Id: </strong>{user.employeeId}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                <strong>Address: </strong><br/>
-                                                {user.address.address}<br/>
-                                                {user.address.city},&nbsp;{user.address.state}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                <strong>Contact details: </strong><br/>
-                                                {user.email}<br/>
-                                                {user.phone}
-                                            </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                        ))
+                                        usersDisplay
                                         :
                                         <h6 className="no-records-card">No records found!</h6>   
                                     }
@@ -63,25 +79,10 @@ export default class User extends React.Component {
                         })
                     }
                 </Tabs>
-                <div className="paginationWrapper">
-                    <Pagination size="sm">
-                    {
-                        this.props.data &&
-                        this.props.data.usersData &&
-                        this.props.data.usersData.map((item, i) => {
-                            return (
-                                <Pagination.Item 
-                                    onClick={(e, i) => this.props.data.handlePageSwitch(e, i)}
-                                    key={i+1} 
-                                    active={(i+1) === this.props.data.activePage}
-                                    tabIndex={i+1}
-                                >
-                                    {i+1}
-                                </Pagination.Item>
-                            )
-                        })
-                    }    
-                    </Pagination>
+                <div className="pagination">
+                    {/* <PaginationUI 
+                        data={this.props}
+                    /> */}
                 </div>
             </div>
             }

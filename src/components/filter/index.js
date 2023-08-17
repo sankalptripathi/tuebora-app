@@ -1,6 +1,7 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import React from "react";
+import _ from "lodash";
 
 export default class FilterDropdown extends React.Component {
     constructor(props) {
@@ -14,18 +15,24 @@ export default class FilterDropdown extends React.Component {
 
     componentDidMount = async () => {
         const users = await this.props.data.getUsersFromDb();
+        const accounts = await this.props.data.getAccountsFromDb();
         this.setState({
-            usersList: this.props.data.usersData
+            usersList: this.props.data.usersData,
+            accountsList: this.props.data.accountsData
         });
         this.props.data.getCitiesOfUsers(this.props.data.usersData);
+        this.props.data.getCreatedDatesOfAccounts(this.props.data.accountsData);
     }
 
     render() {
     const selectedCityHash = document.location.href.indexOf('#') > -1 ? document.location.href.split('#')[1].substring(1) : '';
-    // this.props.data.selectCity(selectedCityHash);
+    const accountCreatedDate = document.location.href.indexOf('#') > -1 ? document.location.href.split('#')[1].substring(1) : '';
+
     return(
             <div className="filterDropdownWrapper ht-35">
-                <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
+                {
+                    this.props.data.entityName === 'users' ?
+                    <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
                         <Dropdown.ItemText style={{fontSize: '12px'}}>
                             {this.props.data.data.configs.search && 
                             this.props.data.data.configs.search.allowedFilters[0].name}
@@ -68,6 +75,38 @@ export default class FilterDropdown extends React.Component {
                         />
                     </Dropdown.Item>
                 </DropdownButton>
+                :
+                <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
+                        <Dropdown.ItemText style={{fontSize: '12px'}}>
+                            {this.props.data.data.configs.search && 
+                            _.capitalize(this.props.data.data.configs.search.allowedFilters[0].name.replace(".", " "))}
+                        </Dropdown.ItemText>
+                        <Dropdown.Item>
+                            <input 
+                                ref={this.props.data.inputManagerRef}
+                                type="text"
+                                name="managerName"
+                                value={this.props.data.managersData} 
+                                onChange={(e) => this.props.data.inputManagerName(e)} 
+                            />
+                        </Dropdown.Item>
+                        <Dropdown.ItemText style={{fontSize: '12px'}}>
+                            {
+                                this.props.data.data.configs.search && 
+                                _.capitalize(this.props.data.data.configs.search.allowedFilters[1].name.replace(".", " "))
+                            }
+                        </Dropdown.ItemText>
+                        <Dropdown.Item>
+                            <input 
+                                ref={this.props.data.inputManagerRef}
+                                type="text"
+                                name="managerName"
+                                value={this.props.data.managersData} 
+                                onChange={(e) => this.props.data.inputManagerName(e)} 
+                            />
+                        </Dropdown.Item>
+                </DropdownButton>
+                }
             </div>
         );
     }

@@ -30,10 +30,13 @@ export default function LayoutHoc(CompName, data) {
                 entityName: '',
                 getUsersFromDb: this.getUsersFromDb,
                 filterTabHandler: this.filterTabHandler,
+                filterTabHandlerAccounts: this.filterTabHandlerAccounts,
                 getCitiesOfUsers: this.getCitiesOfUsers,
+                getCreatedDatesOfAccounts: this.getCreatedDatesOfAccounts,
                 selectCity: this.selectCity,
                 inputManagerName: this.inputManagerName,
                 searchTextHandler: this.searchTextHandler,
+                getAccountsFromDb: this.getAccountsFromDb,
                 handlePageSwitch: this.handlePageSwitch
             }
         }
@@ -49,15 +52,15 @@ export default function LayoutHoc(CompName, data) {
             });
         }
         getUsersFromDb = async () => {
-            const usersData = await getUsers("", this.state.limit);
-            this.setState({
-                usersData: usersData,
+            const usersData = await getUsers(this.state.currentTab, this.state.limit);
+            await this.setState({
+                usersData,
             });
         }
         getAccountsFromDb = async () => {
-            const accountsData = await getAccounts();
-            this.setState({
-                accountsData: accountsData
+            const accountsData = await getAccounts(this.state.currentTab, this.state.limit);
+            await this.setState({
+                accountsData,
             });
         }   
         handlePageSwitch = async (e, pgI) => {
@@ -72,16 +75,16 @@ export default function LayoutHoc(CompName, data) {
         filterTabHandler = async (mgr = '') => {
             this.setState({
                 currentTab: mgr
-            });
+            }, 
+            async () => await this.getUsersFromDb());
             document.location.href = "#/";
-            const users = this.getUsersFromDb();
-            //const dropdownFilterCity = this.selectCity(this.state.selectedCity);
-            if(mgr) {
-                const filterResults = await getUsers(mgr);
-                this.setState({
-                    usersData: filterResults
-                });
-            }
+        }
+        filterTabHandlerAccounts = async (acc = '') => {
+            this.setState({
+                currentTab: acc
+            }, 
+            async () => await this.getAccountsFromDb());
+            document.location.href = "#/";
         }
         getCitiesOfUsers = (users) => {
             if(users.length) {
@@ -98,9 +101,15 @@ export default function LayoutHoc(CompName, data) {
                 });
             }
         }
+        getCreatedDatesOfAccounts = (accounts) => {
+            if(accounts.length) {
+                const accountsArr = accounts.map(u => u.createdDate);
+                const uniqueArr = [];
+                
+            }
+        }
         selectCity = (city) => {
             const inputManagerField = this.inputManagerRef && this.inputManagerRef.current && this.inputManagerRef.current.value;
-            const searchField = this.state.searchTextString;
 
             if(city !== "Select City") {
                 this.setState({
@@ -126,7 +135,6 @@ export default function LayoutHoc(CompName, data) {
         }
         inputManagerName = (elem) => {
             const selectCity = this.selectCityRef && this.selectCityRef.current && this.selectCityRef.current.innerText;
-            const searchField = this.state.searchTextString;
 
             const manager = elem.target ? elem.target.value : elem.value;
             this.setState({
@@ -166,15 +174,13 @@ export default function LayoutHoc(CompName, data) {
                             const flatObj = flattenObject(u);
                             for(let item in flatObj) {
                                 if(allowedFields.indexOf(item) > -1) {
-                                    thisUserDetails = (String(u[item]).toLowerCase() === textQuery || 
-                                                        String(flatObj[item]).toLowerCase() === textQuery) ?
-                                    [{...thisUserDetails}, {...u}] :
-                                    null;
-                                    
-                                }                                
+                                    if(String(u[item]).toLowerCase() === textQuery || String(flatObj[item]).toLowerCase() === textQuery) {
+                                        thisUserDetails.push(u);
+                                    }
+                                }
                             }
 
-                            if(thisUserDetails) {
+                            if(thisUserDetails.length) {
                                 this.setState({
                                     usersData: thisUserDetails
                                 });
