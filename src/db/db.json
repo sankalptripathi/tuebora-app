@@ -4,35 +4,49 @@
 		"configs": {
 			"search": {
 				"layout": 8,
-				"placeholder": "Search Users",
-				"allowedFields": [
+				"placeholder": "Search Users records",
+                "name": "searchbox",
+                "type": "text",
+                "allowedFields": [
 					"firstName",
 					"lastName",
-					"manager.name",
 					"employeeId",
+                    "address.city",
 					"permissions"
 				],
 				"allowedFilters": [
 					{
 						"name": "location",
 						"type": "dropdown",
-						"values": [
-							"Bangalore",
-							"Delhi",
-							"Mumbai",
-							"Chennai",
-							"Coimbatore",
-							"Austin",
-							"Boston"
-						]
+                        "label": "Location"
 					},
 					{
-						"name": "manager",
-						"type": "text"
+						"name": "managerName",
+						"type": "text",
+                        "label": "Manager Name"
 					}
 				]
-			}
-		}
+			},
+            "tabs": [
+                {
+                  "name": "All Users",
+                  "id": "all_users"
+                },
+                {
+                  "name": "My Team Users",
+                  "id": "Sankalp"
+                },
+                {
+                  "name": "Mohan Users",
+                  "id": "Mohan"
+                }
+            ]
+		},
+        "classList": {
+            "mainWrapper": "tabs-display users-display",
+            "searchWrapper": "searchbox",
+            "tabsWrapper": "tabs-ui"
+        }
 	},
     "accountsSchema": {
 		"heading": "Account Management",
@@ -45,11 +59,17 @@
 				{
 					"id": "orphaned_accounts",
 					"name": "Orphaned Accounts"
+				},
+				{
+					"id": "normal_accounts",
+					"name": "Normal Accounts"
 				}
 			],
 			"search": {
 				"layout": 8,
-				"placeholder": "Search Accounts",
+				"placeholder": "Search Accounts records",
+                "name": "searchbox",
+                "type": "text",
 				"allowedFields": [
 					"account.name",
 					"account.description",
@@ -57,18 +77,24 @@
 				],
 				"allowedFilters": [
 					{
-						"name": "account.createdOn",
-						"type": "date"
-						
+						"name": "accCreationDate",
+						"type": "date",
+						"label": "Account created on"
 					},
 					{
-						"name": "account.id",
+						"name": "accountId",
 						"type": "text",
-						"operator": "eq"
+						"operator": "eq",
+						"label": "Account Id"
 					}
 				]
 			}
-		}
+		},
+        "classList": {
+            "mainWrapper": "tabs-display account-display",
+            "searchWrapper": "searchbox",
+            "tabsWrapper": "tabs-ui"
+        }
 	},
     "users": [{
         "employeeId": 1,

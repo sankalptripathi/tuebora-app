@@ -18,28 +18,31 @@ export default class Searchbox extends React.Component {
     }
     render() {
     return(
-        (this.props.data.entityName === "users") ?
-            <div className="searchboxWrapper ht-35">
-                <input type="text" 
-                name="searchbox" 
-                placeholder={this.props.data.data.configs.search && 
-                    this.props.data.data.configs.search.placeholder}
-                onChange={(e, allowedFields) => {
-                    this.props.data.searchTextHandler(e, this.state.allowedFields)
-                }} 
-                value={this.searchTextString}
-                />
-            </div>
+        (this.props.data.entityName === "users") 
+        ?
+        <div className="searchboxWrapper ht-35">
+            <input type={this.props.data.data.configs.search.type} 
+            name={this.props.data.data.configs.search.name} 
+            placeholder={this.props.data.data.configs.search && 
+                this.props.data.data.configs.search.placeholder}
+            onChange={(e, allowedFields) => {
+                this.props.data.searchTextHandler(e, this.state.allowedFields)
+            }} 
+            value={this.searchTextString}
+            ref={this.props.data.searchFieldRef}
+            />
+        </div>
         :
         <div className="searchboxWrapper ht-35">
-            <input type="text" 
-            name="searchbox" 
+            <input type={this.props.data.data.configs.search.type}
+            name={this.props.data.data.configs.search.name}
             placeholder={this.props.data.data.configs.search && 
                 this.props.data.data.configs.search.placeholder}
             onChange={(e, allowedFields) => {
                 this.props.data.searchTextHandlerAccount(e, this.state.allowedFields)
             }} 
             value={this.searchTextString}
+            ref={this.props.data.searchFieldRef}
             />
         </div>
         );

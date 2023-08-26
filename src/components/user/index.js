@@ -3,7 +3,6 @@ import Card from "react-bootstrap/Card";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { MainContext } from "../../context";
-import PaginationUI from "../pagination";
 
 export default class User extends React.Component {
     constructor(props) {
@@ -60,7 +59,7 @@ export default class User extends React.Component {
                                             <ul>
                                                 {user.permissions && user.permissions.map(p => <li>{p}</li>)}
                                             </ul>
-                                        </Card.Text>
+                                        </Card.Text>    
                                         </Card.Body>
                                     </Card>
                                 )

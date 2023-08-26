@@ -35,10 +35,11 @@ export default class FilterDropdown extends React.Component {
                     <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
                         <Dropdown.ItemText style={{fontSize: '12px'}}>
                             {this.props.data.data.configs.search && 
-                            this.props.data.data.configs.search.allowedFilters[0].name}
+                            this.props.data.data.configs.search.allowedFilters[0].label}
                         </Dropdown.ItemText>
                         <DropdownButton variant="default" 
-                        id="filterDropdownLocation" 
+                        id="filterDropdownLocation"
+                        name={this.props.data.data.configs.search.allowedFilters[0].name} 
                         title={selectedCityHash ? this.props.data.selectedCity : "Select City"} 
                         onSelect={
                             this.props.data.selectCity
@@ -61,14 +62,14 @@ export default class FilterDropdown extends React.Component {
                     <Dropdown.ItemText style={{fontSize: '12px'}}>
                         {
                             this.props.data.data.configs.search && 
-                            this.props.data.data.configs.search.allowedFilters[1].name
+                            this.props.data.data.configs.search.allowedFilters[1].label
                         }
                     </Dropdown.ItemText>
                     <Dropdown.Item>
                         <input 
                             ref={this.props.data.inputManagerRef}
-                            type="text"
-                            name="managerName"
+                            type={`${this.props.data.data.configs.search.allowedFilters[1].type}`}
+                            name={`${this.props.data.data.configs.search.allowedFilters[1].name}`}
                             value={this.props.data.managersData} 
                             onChange={(e) => this.props.data.inputManagerName(e)} 
                             // onKeyDown={this.props.data.detectKeyDown} 
@@ -78,14 +79,16 @@ export default class FilterDropdown extends React.Component {
                 :
                 <DropdownButton variant="info" id="filterDropdown" title="Filter By" size="sm" autoClose="outside">
                         <Dropdown.ItemText style={{fontSize: '12px'}}>
-                            {this.props.data.data.configs.search && 
-                            _.capitalize(this.props.data.data.configs.search.allowedFilters[0].name.replace(".", " "))}
+                            {
+                            this.props.data.data.configs.search && 
+                            this.props.data.data.configs.search.allowedFilters[0].label
+                            }
                         </Dropdown.ItemText>
                         <Dropdown.Item>
                             <input 
                                 // ref={this.props.data.inputAccountCreatedDateRef}
-                                type="text"
-                                name="accCreationDate"
+                                type={`${this.props.data.data.configs.search.allowedFilters[0].type}`}
+                                name={`${this.props.data.data.configs.search.allowedFilters[0].name}`}
                                 // value={} 
                                 // onChange={(e) => this.props.data} 
                             />
@@ -93,14 +96,14 @@ export default class FilterDropdown extends React.Component {
                         <Dropdown.ItemText style={{fontSize: '12px'}}>
                             {
                                 this.props.data.data.configs.search && 
-                                _.capitalize(this.props.data.data.configs.search.allowedFilters[1].name.replace(".", " "))
+                                this.props.data.data.configs.search.allowedFilters[1].label
                             }
                         </Dropdown.ItemText>
                         <Dropdown.Item>
                             <input 
                                 ref={this.props.data.inputAccountIdRef}
-                                type="text"
-                                name="accountId"
+                                type={`${this.props.data.data.configs.search.allowedFilters[1].type}`}
+                                name={`${this.props.data.data.configs.search.allowedFilters[1].name}`}
                                 value={this.props.data.inputAccountId} 
                                 onChange={(e) => this.props.data.inputAccountIdHandler(e)} 
                             />

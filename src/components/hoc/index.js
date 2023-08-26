@@ -117,16 +117,22 @@ export default function LayoutHoc(CompName, data) {
         }
         selectCity = (city) => {
             const inputManagerField = this.inputManagerRef && this.inputManagerRef.current && this.inputManagerRef.current.value;
+            const searchField = this.searchFieldRef && this.searchFieldRef.current && this.searchFieldRef.current.value;
 
             if(city !== "Select City") {
                 this.setState({
                     selectedCity: city
                 }, async () => {
-                    const allUsers = await getUsers(this.state.currentTab);
+                    let allUsers = [];
+                    if(searchField) {
+                        allUsers = this.state.usersData;
+                    } else {
+                        allUsers = await getUsers(this.state.currentTab);
+                    }
                     const filteredUsersFromCity = allUsers && allUsers.filter(user => {
                         return (
                             (inputManagerField) ? 
-                            (user.address.city === this.state.selectedCity && user.manager.toLowerCase() === inputManagerField.toLowerCase()) : 
+                            (user.address.city === this.state.selectedCity && user && user.manager.toLowerCase() === inputManagerField.toLowerCase()) : 
                             user.address.city === this.state.selectedCity
                         )
                     });
@@ -142,14 +148,21 @@ export default function LayoutHoc(CompName, data) {
         }
         inputManagerName = (elem) => {
             const selectCity = this.selectCityRef && this.selectCityRef.current && this.selectCityRef.current.innerText;
+            const searchField = this.searchFieldRef && this.searchFieldRef.current && this.searchFieldRef.current.value;
 
             const manager = elem.target ? elem.target.value : elem.value;
             this.setState({
                 managersData: manager
-            }, () => {
+            }, async () => {
                 // console.log(managers);
                 if(manager) {
-                    const users = this.state.usersData.filter(u => {
+                    let allUsers = [];
+                    if(searchField) {
+                        allUsers = this.state.usersData;
+                    } else {
+                        allUsers = await getUsers(this.state.currentTab);
+                    }
+                    const users = allUsers && allUsers.filter(u => {
                         return (
                             (manager.indexOf(u.manager.name.toLowerCase()) > -1) && 
                             (selectCity === "Select City" ? true : selectCity === u.address.city)
@@ -219,7 +232,7 @@ export default function LayoutHoc(CompName, data) {
                     }
                 });
             }
-        }       
+        }
         searchTextHandlerAccount = (elem, all) => {
             if(all) {
                 const allowed = [];
@@ -263,7 +276,7 @@ export default function LayoutHoc(CompName, data) {
                 <div className="hoc-wrapper">
                     <h6 className="main-heading">{this.state.data.heading}</h6>
                     <div className="search-comp component">
-                        <form ref={this.searchFieldRef}>
+                        <form>
                             <Searchbox data={this.state} />
                             <FilterDropdown data={this.state}/>
                         </form>

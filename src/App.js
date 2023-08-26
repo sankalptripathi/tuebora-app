@@ -15,37 +15,11 @@ import _ from 'lodash';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.userData = {
-        classList: {
-          mainWrapper: 'tabs-display users-display',
-          searchWrapper: 'searchbox',
-          tabsWrapper: 'tabs-ui'
-        },
-        configs: {
-          tabs: [
-            {
-              "name": "All Users",
-              "id": "all_users"
-            },
-            {
-              "name": "My Team Users",
-              "id": "Sankalp"
-            }
-          ]
-        }
-    };
-    this.accountData = {
-      classList: {
-        mainWrapper: 'tabs-display account-display',
-        searchWrapper: 'searchbox',
-        tabsWrapper: 'tabs-ui'
-      }
-    };
 
     this.state = {
       designType: 'grid-view',
-      usersPageSchema: this.userData,
-      accountsPageSchema: this.accountData
+      usersPageSchema: {},
+      accountsPageSchema: {}
     }
   }
 
@@ -53,12 +27,9 @@ class App extends React.Component {
     let usersSchema = await getUserSchema();
     let accountsSchema = await getAccountsSchema();
 
-    const usersUpdatedSchema = _.merge(usersSchema, this.state.usersPageSchema);
-    const accountsUpdatedSchema = _.merge(accountsSchema, this.state.accountsPageSchema);
-
     this.setState({
-      usersPageSchema: usersUpdatedSchema,
-      accountsPageSchema: accountsUpdatedSchema
+      usersPageSchema: usersSchema,
+      accountsPageSchema: accountsSchema
     });
   }
 
@@ -70,7 +41,7 @@ class App extends React.Component {
   }
 
   render() {
-    if(this.state.usersPageSchema.configs.search && this.state.accountsPageSchema.heading) {
+    if(this.state.usersPageSchema && this.state.usersPageSchema.configs && this.state.usersPageSchema.configs.search && this.state.accountsPageSchema.heading) {
       const UserComponent = LayoutHoc(User, this.state.usersPageSchema);
       const AccountComponent = LayoutHoc(Account, this.state.accountsPageSchema);
 
